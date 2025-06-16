@@ -1,0 +1,64 @@
+<h1>Books</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Body</th>
+    </tr>
+  </thead>
+
+  <style>
+  table, th, td {
+    border: none;
+  }
+  </style>
+
+  <tbody>
+    <% @books.each do |book| %>
+      <tr>
+        <td><%= book.title %></td>
+        <td><%= book.body %></td>
+
+        <td>
+        <%= link_to "Show", book_path(book) %> &nbsp;&nbsp;
+        <%= link_to "Edit", edit_book_path(book) %> &nbsp;&nbsp;
+        <%= link_to "Destroy", book_path(book), method: :delete, data: { confirm: "本当に削除しますか？" } %>
+
+        </td>
+      
+
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<h1>New Book</h1>
+
+<% if @book.errors.any? %>
+  <div class="error-messages">
+    <h2><%= pluralize(@book.errors.count, "error") %> prohibited this book from being saved:</h2>
+    <ul>
+      <% @book.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+
+<%= form_with model: @book, local: true do |f| %>
+  <p>
+    <%= f.label :title %><br>
+    <%= f.text_field :title %>
+  </p>
+
+  <p>
+    <%= f.label :body %><br>
+    <%= f.text_area :body %>
+  </p>
+
+  <%= f.submit "Create Book" %>
+<% end %>
+
+
